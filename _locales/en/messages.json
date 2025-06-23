@@ -2736,7 +2736,7 @@
     "message": "Lock"
   },
   "lockMetaMask": {
-    "message": "Lock MetaMask"
+    "message": "Lock Wallet"
   },
   "lockTimeInvalid": {
     "message": "Lock time must be a number between 0 and 10080"
@@ -2982,14 +2982,14 @@
     "message": "This is a potential scam"
   },
   "needHelp": {
-    "message": "Need help? Contact $1",
+    "message": "",
     "description": "$1 represents `needHelpLinkText`, the text which goes in the help link"
   },
   "needHelpFeedback": {
     "message": "Share your feedback"
   },
   "needHelpLinkText": {
-    "message": "MetaMask support"
+    "message": ""
   },
   "needHelpSubmitTicket": {
     "message": "Submit a ticket"
