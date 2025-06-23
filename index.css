@@ -57258,6 +57258,205 @@ DEPRECATED
   justify-content: flex-end;
 }
 
+/* Sidebar Pin Component Styles */
+.sidebar-pin-component {
+  background: var(--color-background-default);
+  border: 1px solid var(--color-border-muted);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 12px 0;
+  box-shadow: var(--shadow-size-sm) var(--color-shadow-default);
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-pin-component:hover {
+  box-shadow: var(--shadow-size-md) var(--color-shadow-default);
+}
+
+.sidebar-pin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sidebar-pin-header h4 {
+  font-size: 0.875rem;
+  font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  color: var(--color-text-default);
+  margin: 0;
+}
+
+.sidebar-pin-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-pin-icon {
+  flex-shrink: 0;
+  color: var(--color-icon-default);
+  padding: 8px;
+  background: var(--color-background-alternative);
+  border-radius: 6px;
+}
+
+.sidebar-pin-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar-pin-info h5 {
+  font-size: 0.875rem;
+  font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  color: var(--color-text-default);
+  margin: 0 0 4px 0;
+}
+
+.sidebar-pin-info p {
+  font-size: 0.75rem;
+  font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--color-text-alternative);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.sidebar-pin-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.sidebar-pin-btn.pin {
+  background: var(--color-primary-default);
+  color: var(--color-primary-inverse);
+}
+
+.sidebar-pin-btn.pin:hover {
+  background: var(--color-primary-alternative);
+}
+
+.sidebar-pin-btn.unpin {
+  background: var(--color-background-alternative);
+  color: var(--color-text-default);
+  border: 1px solid var(--color-border-default);
+}
+
+.sidebar-pin-btn.unpin:hover {
+  background: var(--color-background-alternative-hover);
+}
+
+.metamask-sidebar-instruction-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.instruction-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.instruction-content {
+  background: var(--color-background-default);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: instructionSlideUp 0.3s ease-out;
+}
+
+@keyframes instructionSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.instruction-content h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-default);
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 8px 0;
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background: var(--color-primary-default);
+  color: var(--color-primary-inverse);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.step-text {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--color-text-default);
+  line-height: 1.5;
+}
+
+.instruction-close-btn {
+  width: 100%;
+  padding: 12px 24px;
+  background: var(--color-primary-default);
+  color: var(--color-primary-inverse);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.instruction-close-btn:hover {
+  background: var(--color-primary-alternative);
+}
+
 /*
 Responsive breakpoints
 */

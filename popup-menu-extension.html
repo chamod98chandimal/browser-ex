@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html style="width:357px; height:600px;" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>MetaMask - Pin to Sidebar</title>
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./sidebar-pin-styles.css" />
+    <style>
+        .popup-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            color: var(--color-text-default);
+            cursor: pointer;
+            transition: background 0.2s ease;
+            font-size: 0.875rem;
+        }
+        .sidebar-pin-component {
+            background: var(--color-background-default);
+            border: 1px solid var(--color-border-muted);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body style="width:357px; height:600px;">
+    <!-- Main popup header -->
+    <div class="popup-header">
+        <div class="popup-header-title">
+            <img src="./images/logo/metamask-fox.svg" alt="MetaMask" width="24" height="24" />
+            <span>MetaMask</span>
+        </div>
+        <button class="popup-menu-button" onclick="togglePopupMenu()" aria-label="Menu">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 4H14V6H2V4Z" fill="currentColor"/>
+                <path d="M2 7H14V9H2V7Z" fill="currentColor"/>
+                <path d="M2 10H14V12H2V10Z" fill="currentColor"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Popup menu with pin to sidebar option -->
+    <div id="popup-menu" class="popup-menu" style="display: none;">
+        <div class="popup-menu-content">
+            <button class="popup-menu-item" onclick="showAccountDetails()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M8 1V3M8 13V15M15 8H13M3 8H1" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                Account details
+            </button>
+            
+            <button class="popup-menu-item" onclick="openSettings()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 10.5A2.5 2.5 0 1 0 8 5.5 2.5 2.5 0 0 0 8 10.5Z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M6.5 1H9.5L10 3H13L14.5 6V10L13 13H10L9.5 15H6.5L6 13H3L1.5 10V6L3 3H6L6.5 1Z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                Settings
+            </button>
+
+            <div class="popup-menu-divider"></div>
+            
+            <!-- New Pin to Sidebar menu item -->
+            <button class="popup-menu-item" onclick="showSidebarPinMenu()" id="sidebar-pin-menu-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 3H14V5H2V3ZM2 6H14V8H2V6ZM2 9H14V11H2V9ZM2 12H14V14H2V12Z" fill="currentColor"/>
+                </svg>
+                Pin to sidebar
+            </button>
+
+            <button class="popup-menu-item" onclick="expandFullScreen()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 2H6V4H4V6H2V2ZM10 2H14V6H12V4H10V2ZM2 10H4V12H6V14H2V10ZM12 12H10V14H14V10H12V12Z" fill="currentColor"/>
+                </svg>
+                Expand view
+            </button>
+
+            <div class="popup-menu-divider"></div>
+            
+            <button class="popup-menu-item" onclick="lockWallet()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <rect x="3" y="7" width="10" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M5 7V5A3 3 0 0 1 11 5V7" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                Lock MetaMask
+            </button>
+        </div>
+    </div>
+
+    <!-- Sidebar Pin Component (initially hidden) -->
+    <div id="sidebar-pin-component-container" class="sidebar-pin-overlay" style="display: none;">
+        <div class="sidebar-pin-modal">
+            <div class="sidebar-pin-component">
+                <div class="sidebar-pin-header">
+                    <h4>Browser Integration</h4>
+                    <button class="close-btn" onclick="hideSidebarPinMenu()" aria-label="Close">×</button>
+                </div>
+                
+                <div class="sidebar-pin-content">
+                    <div class="sidebar-pin-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M3 21V19H21V21H3ZM3 17V15H21V17H3ZM3 13V11H21V13H3ZM3 9V7H21V9H3ZM3 5V3H21V5H3Z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="sidebar-pin-info">
+                        <h5 id="sidebar-pin-status">Pin to Sidebar</h5>
+                        <p id="sidebar-pin-description">
+                            Access MetaMask quickly from the sidebar without interrupting your browsing experience
+                        </p>
+                    </div>
+                    
+                    <button class="sidebar-pin-btn pin" id="sidebar-pin-button" onclick="toggleSidebarPin()">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 2L10 6H6L8 2Z" fill="currentColor"/>
+                            <path d="M7 8H9V14H7V8Z" fill="currentColor"/>
+                        </svg>
+                        Pin to Sidebar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main app content -->
+    <div id="app-content">
+        <img class="loading-logo" src="./images/logo/metamask-fox.svg" alt="" loading="lazy" />
+        <img class="loading-spinner" src="./images/spinner.gif" alt="" loading="lazy" />
+    </div>
+
+    <script>
+        let isPinned = localStorage.getItem('metamask-sidebar-pinned') === 'true';
+
+        // Toggle popup menu
+        function togglePopupMenu() {
+            const menu = document.getElementById('popup-menu');
+            const isVisible = menu.style.display !== 'none';
+            menu.style.display = isVisible ? 'none' : 'block';
+        }
+
+        // Show sidebar pin component
+        function showSidebarPinMenu() {
+            document.getElementById('popup-menu').style.display = 'none';
+            document.getElementById('sidebar-pin-component-container').style.display = 'block';
+            updateSidebarPinStatus();
+        }
+
+        // Hide sidebar pin component
+        function hideSidebarPinMenu() {
+            document.getElementById('sidebar-pin-component-container').style.display = 'none';
+        }
+
+        // Update pin status display
+        function updateSidebarPinStatus() {
+            const statusElement = document.getElementById('sidebar-pin-status');
+            const descriptionElement = document.getElementById('sidebar-pin-description');
+            const buttonElement = document.getElementById('sidebar-pin-button');
+            
+            if (isPinned) {
+                statusElement.textContent = 'Pinned to Sidebar';
+                descriptionElement.textContent = 'MetaMask is accessible from your browser sidebar for quick access while browsing';
+                buttonElement.textContent = 'Unpin';
+                buttonElement.className = 'sidebar-pin-btn unpin';
+                buttonElement.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2L6 6H10L8 2Z" fill="currentColor"/>
+                        <path d="M7 8H9V14H7V8Z" fill="currentColor"/>
+                    </svg>
+                    Unpin
+                `;
+            } else {
+                statusElement.textContent = 'Pin to Sidebar';
+                descriptionElement.textContent = 'Access MetaMask quickly from the sidebar without interrupting your browsing experience';
+                buttonElement.textContent = 'Pin to Sidebar';
+                buttonElement.className = 'sidebar-pin-btn pin';
+                buttonElement.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 2L10 6H6L8 2Z" fill="currentColor"/>
+                        <path d="M7 8H9V14H7V8Z" fill="currentColor"/>
+                    </svg>
+                    Pin to Sidebar
+                `;
+            }
+        }
+
+        // Toggle sidebar pin status and show instructions
+        function toggleSidebarPin() {
+            if (!isPinned) {
+                guidePinToSidebar();
+                isPinned = true;
+                localStorage.setItem('metamask-sidebar-pinned', 'true');
+            } else {
+                guideUnpinFromSidebar();
+                isPinned = false;
+                localStorage.setItem('metamask-sidebar-pinned', 'false');
+            }
+            updateSidebarPinStatus();
+        }
+
+        // Show pin instructions
+        function guidePinToSidebar() {
+            const instructionModal = document.createElement('div');
+            instructionModal.className = 'metamask-sidebar-instruction-modal';
+            instructionModal.innerHTML = `
+                <div class="instruction-overlay">
+                    <div class="instruction-content">
+                        <h3>Pin MetaMask to Sidebar</h3>
+                        <div class="instruction-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <span class="step-text">Click the browser's Extensions menu (puzzle piece icon)</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <span class="step-text">Find MetaMask in the list</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <span class="step-text">Click the pin icon next to MetaMask</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                <span class="step-text">Right-click on the MetaMask icon and select "Show in sidebar"</span>
+                            </div>
+                        </div>
+                        <button class="instruction-close-btn" onclick="this.parentElement.parentElement.remove()">
+                            Got it!
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(instructionModal);
+
+            setTimeout(() => {
+                if (instructionModal.parentNode) {
+                    instructionModal.remove();
+                }
+            }, 10000);
+        }
+
+        // Show unpin instructions
+        function guideUnpinFromSidebar() {
+            const instructionModal = document.createElement('div');
+            instructionModal.className = 'metamask-sidebar-instruction-modal';
+            instructionModal.innerHTML = `
+                <div class="instruction-overlay">
+                    <div class="instruction-content">
+                        <h3>Unpin MetaMask from Sidebar</h3>
+                        <div class="instruction-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <span class="step-text">Right-click on the MetaMask icon in the sidebar</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <span class="step-text">Select "Hide from sidebar" or "Remove from sidebar"</span>
+                            </div>
+                        </div>
+                        <button class="instruction-close-btn" onclick="this.parentElement.parentElement.remove()">
+                            Got it!
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(instructionModal);
+
+            setTimeout(() => {
+                if (instructionModal.parentNode) {
+                    instructionModal.remove();
+                }
+            }, 10000);
+        }
+
+        // Placeholder functions for other menu items
+        function showAccountDetails() {
+            console.log('Show account details');
+            togglePopupMenu();
+        }
+
+        function openSettings() {
+            console.log('Open settings');
+            togglePopupMenu();
+        }
+
+        function expandFullScreen() {
+            console.log('Expand full screen');
+            togglePopupMenu();
+        }
+
+        function lockWallet() {
+            console.log('Lock wallet');
+            togglePopupMenu();
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('popup-menu');
+            const menuButton = document.querySelector('.popup-menu-button');
+            
+            if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+                menu.style.display = 'none';
+            }
+        });
+
+        // Initialize pin status on load
+        updateSidebarPinStatus();
+    </script>
+
+    <style>
+        /* Popup Menu Styles */
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--color-border-muted);
+            background: var(--color-background-default);
+        }
+
+        .popup-header-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--color-text-default);
+        }
+
+        .popup-menu-button {
+            background: none;
+            border: none;
+            color: var(--color-icon-default);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+
+        .popup-menu-button:hover {
+            background: var(--color-background-alternative);
+        }
+
+        .popup-menu {
+            position: absolute;
+            top: 60px;
+            right: 16px;
+            background: var(--color-background-default);
+            border: 1px solid var(--color-border-muted);
+            border-radius: 8px;
+            box-shadow: var(--shadow-size-md) var(--color-shadow-default);
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .popup-menu-content {
+            padding: 8px 0;
+        }
+
+        .popup-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            color: var(--color-text-default);
+            cursor: pointer;
+            transition: background 0.2s ease;
+            font-size: 0.875rem;
+        }
+
+        .popup-menu-item:hover {
+            background: var(--color-background-alternative);
+        }
+
+        .popup-menu-divider {
+            height: 1px;
+            background: var(--color-border-muted);
+            margin: 8px 0;
+        }
+
+        .sidebar-pin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .sidebar-pin-modal {
+            background: var(--color-background-default);
+            border-radius: 12px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</body>
+</html> 

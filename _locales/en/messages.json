@@ -572,11 +572,11 @@
     "description": "$1 is the first item, $2 is the second item. Used in Snap Install Warning modal."
   },
   "appDescription": {
-    "message": "An Ethereum Wallet in your Browser",
+    "message": "A wallet for passkeeper viewer",
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask",
+    "message": "paaskeeper wallet",
     "description": "The name of the application"
   },
   "appNameBeta": {
@@ -4038,6 +4038,24 @@
   },
   "pinToTop": {
     "message": "Pin to top"
+  },
+  "pinToSidebar": {
+    "message": "Pin to sidebar"
+  },
+  "pinToSidebarDescription": {
+    "message": "Pin MetaMask to your browser sidebar for easy access while browsing"
+  },
+  "pinToSidebarTitle": {
+    "message": "Pin to sidebar"
+  },
+  "pinnedToSidebar": {
+    "message": "Pinned to sidebar"
+  },
+  "unpinFromSidebar": {
+    "message": "Unpin from sidebar"
+  },
+  "sidebarAccessDescription": {
+    "message": "Access MetaMask quickly from the sidebar without interrupting your browsing experience"
   },
   "pleaseConfirm": {
     "message": "Please confirm"

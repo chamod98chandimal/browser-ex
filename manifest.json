@@ -45,6 +45,17 @@
     },
     {
       "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/floating-metamask-icon.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
         "*://connect.trezor.io/*/popup.html"
       ],
       "js": [
@@ -81,8 +92,12 @@
     "storage",
     "unlimitedStorage",
     "webRequest",
-    "offscreen"
+    "offscreen",
+    "sidePanel"
   ],
+  "side_panel": {
+    "default_path": "sidebar-dapp.html"
+  },
   "sandbox": {
     "pages": [
       "snaps/index.html"
